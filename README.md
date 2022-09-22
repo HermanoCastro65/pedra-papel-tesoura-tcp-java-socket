@@ -8,14 +8,10 @@
 
 ```bash
 git clone https://github.com/HermanoCastro65/pedra-papel-tesoura-tcp-java-socket.git
-
-cd pedra-papel-tesoura-tcp-java-socket
-
-code .
 ```
-
-- Start dev server:
-
 ```bash
-yarn dev
+cd pedra-papel-tesoura-tcp-java-socket
+```
+```bash
+code .
 ```
