@@ -6,12 +6,14 @@ import java.io.InputStreamReader;
 
 /**
  * Classe utilitária usada para ler dados dá partir do console
+ * 
  * @author felipe Campos
  *
  */
 public class Console {
 	/**
 	 * Lê uma string do console
+	 * 
 	 * @return String lida
 	 */
 	public static String readString() {
@@ -23,4 +25,3 @@ public class Console {
 		}
 	}
 }
-	

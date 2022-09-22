@@ -4,13 +4,13 @@ package server;
 public class AplicacaoServer {
 
 	public static void main(String[] args) throws Exception {
-		if(args.length != 1) {
+		if (args.length != 1) {
 			System.out.println("Argumento: <porta>\n");
 			return;
 		}
 
 		var server = new TCPServer(Integer.parseInt(args[0]));
-			server.startServer();
+		server.startServer();
 	}
 
 }

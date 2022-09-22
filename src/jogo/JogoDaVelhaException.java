@@ -2,10 +2,11 @@ package jogo;
 
 /**
  * Exception que representa uma exceção genérica no jogo da velha.
+ * 
  * @author felipe
  */
 public class JogoDaVelhaException extends Exception {
-	
+
 	/**
 	 * @param message
 	 */
@@ -13,5 +14,5 @@ public class JogoDaVelhaException extends Exception {
 		super(message);
 
 	}
-	
+
 }
