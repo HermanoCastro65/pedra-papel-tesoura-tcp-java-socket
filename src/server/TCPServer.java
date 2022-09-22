@@ -32,8 +32,8 @@ public class TCPServer {
 	 * @throws Exception
 	 */
 	public void startServer() throws Exception {
-		serverSocket = new ServerSocket(2323);
-		System.out.println(serverSocket.getLocalSocketAddress());
+		serverSocket = new ServerSocket(this.port);
+		System.out.println("Endereço local: " + serverSocket.getLocalSocketAddress());
 			System.out.println("Serviço disponível. Porta: " + port + ". Aguardando os jogadores...");
 			
 			var jogo = new Jogo();
