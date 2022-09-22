@@ -8,10 +8,8 @@
 
 ```bash
 git clone https://github.com/HermanoCastro65/pedra-papel-tesoura-tcp-java-socket.git
-```
-```bash
+
 cd pedra-papel-tesoura-tcp-java-socket
-```
-```bash
+
 code .
 ```
