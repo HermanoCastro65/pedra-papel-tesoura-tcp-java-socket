@@ -20,11 +20,6 @@ public class Jogador {
 	private String nome;
 
 	/**
-	 * Simbulo que representa o jogador('X' ou 'O').
-	 */
-	private char simbolo;
-
-	/**
 	 * Canais de untrada e saida de dados.
 	 */
 	private BufferedReader in;
@@ -32,17 +27,12 @@ public class Jogador {
 
 	public Jogador(String nome, char simbulo, BufferedReader in, PrintStream out) {
 		this.nome = nome;
-		this.simbolo = simbulo;
 		this.in = in;
 		this.out = out;
 	}
 
 	public String getNome() {
 		return nome;
-	}
-
-	public char getSimbolo() {
-		return simbolo;
 	}
 
 	public BufferedReader getIn() {
