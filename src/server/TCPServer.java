@@ -13,18 +13,13 @@ import jogo.Jogador;
 public class TCPServer {
 	private int port;
 	private ServerSocket serverSocket;
-
 	private List<Jogador> jogadores = new ArrayList<Jogador>();
 
 	public TCPServer(int port) {
 		this.port = port;
 	}
 
-	/**
-	 * Classe que serve o jogo aos clientes (jogadores).
-	 * 
-	 * @throws Exception
-	 */
+	// Classe que serve o jogo aos clientes (jogadores)
 	public void startServer() throws Exception {
 		serverSocket = new ServerSocket(this.port);
 		System.out.println("Endereço local: " + serverSocket.getLocalSocketAddress());
@@ -41,20 +36,13 @@ public class TCPServer {
 		}
 	}
 
-	/**
-	 * Envia mesagem a toda lista de jogadores.
-	 * 
-	 * @param msg
-	 */
+	// Envia mesagem a toda lista de jogadores.
 	public void sendAll(String msg) {
 		jogadores.forEach(jogador -> jogador.send(msg));
 	}
 
-	/**
-	 * Classe responsavel pela lógica de jogo
-	 */
+	// Classe responsavel pela lógica de jogo
 	private class Jogo {
-
 		private Jogador vencedor;
 
 		public Jogo() {
@@ -66,13 +54,7 @@ public class TCPServer {
 			iniciarRodada();
 		}
 
-		/**
-		 * A partir dos serviços da classe TCPServer estabelece a conexão com dois
-		 * jogadores na rede 'localhost'.
-		 * 
-		 * @param serverSocket
-		 * @throws IOException
-		 */
+		// TCPServer estabelece a conexão com dois jogadores na rede 'localhost'
 		private void aguardarJogadores() throws Exception {
 			int numJogadores = 0;
 
@@ -82,8 +64,7 @@ public class TCPServer {
 
 				// Estabelece os fluxos de entrada e saida com os clientes/jogadores
 				var in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-				var out = new PrintStream(clientSocket.getOutputStream());// BufferedWriter(new
-				// OutputStreamWriter(clienteSocket.getOutputStream()));
+				var out = new PrintStream(clientSocket.getOutputStream());
 
 				// Recebe o nome do jogador a partirdo fluxo de entrada
 				String nome = in.readLine();
@@ -98,13 +79,11 @@ public class TCPServer {
 		private void iniciarRodada() throws Exception {
 
 			sendAll("start");
-			boolean finalizado = false;
 			int index = 0;
+			Jogador jogador1 = jogadores.get(index);
+			Jogador jogador2 = jogadores.get(index + 1);
 
-			while (!finalizado) {
-				Jogador jogador1 = jogadores.get(index);
-				Jogador jogador2 = jogadores.get(index + 1);
-
+			while (jogador1.getGame() && jogador2.getGame()) {
 				try {
 					String jogada1 = jogador1.obterJogada().getJogada();
 					String jogada2 = jogador2.obterJogada().getJogada();
@@ -117,7 +96,6 @@ public class TCPServer {
 					if (jogada1.equals(jogada2)) {
 						jogadores.forEach(jogador -> jogador.getOut().println("Empate"));
 						System.out.println("Empate");
-						// finalizado = true;
 					} else {
 						if (jogada1.equals("pedra"))
 							if (jogada2.equals("papel"))
@@ -137,20 +115,21 @@ public class TCPServer {
 							else
 								vencedor = jogador1;
 
-						jogadores.forEach(jogador -> jogador.getOut().println(vencedor.getNome() + " venceu"));
+						jogadores.forEach(jogador -> {
+							jogador.getOut().println(vencedor.getNome() + " venceu");
+
+							try {
+								jogador.endGame();
+							} catch (Exception error) {
+								System.out.println(error.getMessage());
+							}
+						});
+
+						System.out.println(vencedor.getNome() + " venceu");
 					}
 				} catch (Error error) {
 					throw error;
 				}
-			}
-
-			if (vencedor == null) {
-				// O jogo terminou empatado. Avisar os jogadores.
-				sendAll("draw");
-			} else {
-				// O jogo teve um vencedor. Avisar os jogadores.
-				sendAll("win " + vencedor.getNome());
-
 			}
 		}
 	}
