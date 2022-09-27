@@ -32,9 +32,9 @@ public class TCPClient {
 			System.out.println("aguardando o inicio da partida...");
 			in.readLine();
 
-			System.out.println("=================");
+			System.out.println("=======================");
 			System.out.println("| PEDRA PAPEL TESOURA |");
-			System.out.println("=================");
+			System.out.println("=======================");
 			System.out.println();
 
 			while (true) {
@@ -54,11 +54,6 @@ public class TCPClient {
 				} else if (msg.startsWith("error")) {
 					// A última jogada foi inválida
 					System.out.println(msg.substring(6));
-
-				} else if (msg.startsWith("tabuleiro")) {
-					// Carrega o tabuleiro para o lado cliente
-					String tabuleiro = msg.substring(10);
-					System.out.println(tabuleiro);
 
 				} else if (msg.equals("draw")) {
 					System.out.println("O jogo terminou empatado!\n");
