@@ -12,7 +12,6 @@ import java.util.List;
 import jogo.Jogada;
 import jogo.JogadaInvalidaException;
 import jogo.Jogador;
-import jogo.Tabuleiro;
 import pontuacao.ArquivoGerenciadorPontuacao;
 import pontuacao.GerenciadorPontuacao;
 import pontuacao.PontuacaoException;
@@ -56,22 +55,16 @@ public class TCPServer {
 	 */
 	public void sendAll(String msg) {
 		jogadores.forEach(e -> e.send(msg));
-
 	}
 
 	/**
-	 * Inner class responsavel pela lógica de jogo
-	 * 
-	 * @author felipe
-	 *
+	 * Classe responsavel pela lógica de jogo
 	 */
 	private class Jogo {
-		private Tabuleiro tabuleiro;
 		private GerenciadorPontuacao gerenciadorPontuacao;
 		private Jogador vencedor;
 
 		public Jogo() throws PontuacaoException {
-			this.tabuleiro = new Tabuleiro();
 			this.gerenciadorPontuacao = new ArquivoGerenciadorPontuacao();
 			this.vencedor = null;
 		}
@@ -83,14 +76,13 @@ public class TCPServer {
 
 		/**
 		 * A partir dos serviços da classe TCPServer estabelece a conexão com dois
-		 * jogadores na rede 'localhost'.
+		 * jogadores na rede 'localhost'.ß
 		 * 
 		 * @param serverSocket
 		 * @throws IOException
 		 */
 		private void aguardarJogadores() throws IOException {
 			int numJogadores = 0;
-			char simbulo = 'X';
 
 			// rotina para aceitar e estabelecer o numero de jogadores
 			while (numJogadores < 2) {
@@ -99,18 +91,16 @@ public class TCPServer {
 				// Estabelece os fluxos de entrada e saida com os clientes/jogadores
 				var in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 				var out = new PrintStream(clientSocket.getOutputStream());// BufferedWriter(new
-																			// OutputStreamWriter(clienteSocket.getOutputStream()));
+				// OutputStreamWriter(clienteSocket.getOutputStream()));
 
 				// Recebe o nome do jogador a partirdo fluxo de entrada
 				String nome = in.readLine();
 
 				System.out.println("Jogador '" + nome + "' conectado!");
-				TCPServer.this.jogadores.add(new Jogador(nome, simbulo, in, out));
+				TCPServer.this.jogadores.add(new Jogador(nome, in, out));
 
-				simbulo = 'O';
 				++numJogadores;
 			}
-
 		}
 
 		private void iniciarRodada() {
@@ -123,15 +113,12 @@ public class TCPServer {
 			while (!finalizado) {
 				Jogador jogador = jogadores.get(indexJogadorAtual);
 
-				sendAll("tabuleiro " + tabuleiro.toString());
-
 				boolean sequenciaEncontrada = false;
 				boolean jogadaValida = false;
 
 				while (!jogadaValida) {
 					try {
 						Jogada jogada = jogador.obterJogada();
-						sequenciaEncontrada = tabuleiro.putJogada(jogada, jogador.getSimbolo());
 						jogadaValida = true;
 
 					} catch (IOException | JogadaInvalidaException e) {
@@ -144,16 +131,11 @@ public class TCPServer {
 					vencedor = jogador;
 					finalizado = true;
 
-				} else if (tabuleiro.isCompleto()) {
-					finalizado = true;
-
 				}
 
 				indexJogadorAtual = (indexJogadorAtual + 1) % jogadores.size();
 
 			}
-
-			sendAll("tabuleiro " + tabuleiro.toString());
 
 			if (vencedor == null) {
 
@@ -192,7 +174,5 @@ public class TCPServer {
 				}
 			}
 		}
-
 	}
-
 }

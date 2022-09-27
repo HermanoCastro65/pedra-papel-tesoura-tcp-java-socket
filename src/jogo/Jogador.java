@@ -25,7 +25,7 @@ public class Jogador {
 	private BufferedReader in;
 	private PrintStream out;
 
-	public Jogador(String nome, char simbulo, BufferedReader in, PrintStream out) {
+	public Jogador(String nome, BufferedReader in, PrintStream out) {
 		this.nome = nome;
 		this.in = in;
 		this.out = out;
