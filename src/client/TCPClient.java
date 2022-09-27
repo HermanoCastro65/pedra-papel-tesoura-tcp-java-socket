@@ -18,6 +18,7 @@ public class TCPClient {
 
 	public void start() throws Exception {
 		System.out.println("Conectando em " + host + ":" + port + "...");
+
 		try (var socket = new Socket(host, port)) {
 			var in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			var out = new PrintStream(socket.getOutputStream());
@@ -49,22 +50,14 @@ public class TCPClient {
 
 					// Envia a jogada ao servidor
 					out.println(jogada);
+				}
 
-				} else if (msg.startsWith("error")) {
-					// A última jogada foi inválida
-					System.out.println(msg.substring(6));
+				if (msg.equals("end")) {
+					System.out.println("Deseja jogar outra rodada (sim ou não)");
+					String end = Console.readString();
+					System.out.println();
 
-				} else if (msg.equals("draw")) {
-					System.out.println("O jogo terminou empatado!\n");
-					continue;
-
-				} else if (msg.startsWith("win")) {
-					System.out.println("O jogador '" + msg.substring(4) + "' venceu a partida!\n");
-					continue;
-
-				} else if (msg.startsWith("pontuacao:")) {
-					System.out.println(msg.substring(12) + "\n");
-					continue;
+					out.println(end);
 				}
 			}
 		} catch (Error error) {
