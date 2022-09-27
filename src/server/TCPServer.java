@@ -85,6 +85,8 @@ public class TCPServer {
 
 			while (jogador1.getGame() && jogador2.getGame()) {
 				try {
+					placar(jogador1, jogador2);
+
 					String jogada1 = jogador1.obterJogada().getJogada();
 					String jogada2 = jogador2.obterJogada().getJogada();
 
@@ -115,6 +117,8 @@ public class TCPServer {
 							else
 								vencedor = jogador1;
 
+						vencedor.plusPontos();
+
 						jogadores.forEach(jogador -> {
 							jogador.getOut().println(vencedor.getNome() + " venceu");
 
@@ -131,6 +135,14 @@ public class TCPServer {
 					throw error;
 				}
 			}
+		}
+
+		private void placar(Jogador jogador1, Jogador jogador2) {
+			jogadores.forEach(jogador -> {
+				jogador.getOut().println("PLACAR ");
+				jogador.getOut().println(
+						jogador1.getNome() + " " + jogador1.getPontos() + " X " + jogador2.getPontos() + " " + jogador2.getNome());
+			});
 		}
 	}
 }
