@@ -43,7 +43,7 @@ public class Jogador {
 		out.println("play");
 
 		// recebe a jogada a partir do client-side.
-		String str = in.readLine().toString();
+		String str = in.readLine();
 		if (str.equals("pedra") || str.equals("papel") || str.equals("tesoura")) {
 			System.out.print("entrou no IF:");
 			return new Jogada(str);

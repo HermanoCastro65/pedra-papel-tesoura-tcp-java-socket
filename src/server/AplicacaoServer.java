@@ -1,6 +1,5 @@
 package server;
 
-@SuppressWarnings("resource")
 public class AplicacaoServer {
 
 	public static void main(String[] args) throws Exception {
@@ -12,5 +11,4 @@ public class AplicacaoServer {
 		var server = new TCPServer(Integer.parseInt(args[0]));
 		server.startServer();
 	}
-
 }
