@@ -8,6 +8,7 @@ public class Jogador {
 
 	private String nome;
 	private int pontos;
+
 	// Canais de entrada e saída de dados
 	private BufferedReader in;
 	private PrintStream out;
@@ -68,6 +69,10 @@ public class Jogador {
 		if (resp.equals("nao")) {
 			this.game = false;
 		}
+	}
+
+	public void plusPontos() {
+		++pontos;
 	}
 
 	public void send(String msg) {
