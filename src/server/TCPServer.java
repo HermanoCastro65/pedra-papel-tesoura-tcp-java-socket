@@ -45,7 +45,6 @@ public class TCPServer {
 		for (Jogador jogador : jogadores) {
 			jogador.closeConnection();
 		}
-
 	}
 
 	/**
@@ -54,7 +53,7 @@ public class TCPServer {
 	 * @param msg
 	 */
 	public void sendAll(String msg) {
-		jogadores.forEach(e -> e.send(msg));
+		jogadores.forEach(jogador -> jogador.send(msg));
 	}
 
 	/**
@@ -76,7 +75,7 @@ public class TCPServer {
 
 		/**
 		 * A partir dos serviços da classe TCPServer estabelece a conexão com dois
-		 * jogadores na rede 'localhost'.ß
+		 * jogadores na rede 'localhost'.
 		 * 
 		 * @param serverSocket
 		 * @throws IOException
@@ -108,51 +107,65 @@ public class TCPServer {
 
 			sendAll("start");
 			boolean finalizado = false;
-			int indexJogadorAtual = 0;
+			int index = 0;
 
 			while (!finalizado) {
-				Jogador jogador = jogadores.get(indexJogadorAtual);
+				Jogador jogador1 = jogadores.get(index);
+				Jogador jogador2 = jogadores.get(index + 1);
 
-				boolean sequenciaEncontrada = false;
-				boolean jogadaValida = false;
+				try {
+					String jogada1 = jogador1.obterJogada().getJogada();
+					String jogada2 = jogador2.obterJogada().getJogada();
 
-				while (!jogadaValida) {
-					try {
-						Jogada jogada = jogador.obterJogada();
-						jogadaValida = true;
+					jogadores.forEach(jogador -> {
+						jogador.getOut().println(jogador1.getNome() + ": " + jogada1);
+						jogador.getOut().println(jogador2.getNome() + ": " + jogada2);
+					});
 
-					} catch (IOException | JogadaInvalidaException e) {
-						jogador.send("error " + e.getMessage());
-						continue;
+					if (jogada1.equals(jogada2)) {
+						jogadores.forEach(jogador -> jogador.getOut().println("Empate"));
+						System.out.println("Empate");
+						// finalizado = true;
+					} else {
+						if (jogada1.equals("pedra"))
+							if (jogada2.equals("papel"))
+								vencedor = jogador2;
+							else
+								vencedor = jogador1;
+
+						if (jogada1.equals("papel"))
+							if (jogada2.equals("pedra"))
+								vencedor = jogador1;
+							else
+								vencedor = jogador2;
+
+						if (jogada1.equals("tesoura"))
+							if (jogada2.equals("pedra"))
+								vencedor = jogador2;
+							else
+								vencedor = jogador1;
+
+						jogadores.forEach(jogador -> jogador.getOut().println(vencedor.getNome() + " venceu"));
 					}
+				} catch (IOException | JogadaInvalidaException error) {
+					jogador1.send("error " + error.getMessage());
+					continue;
 				}
-
-				if (sequenciaEncontrada) {
-					vencedor = jogador;
-					finalizado = true;
-
-				}
-
-				indexJogadorAtual = (indexJogadorAtual + 1) % jogadores.size();
-
 			}
 
 			if (vencedor == null) {
-
 				// O jogo terminou empatado. Avisar os jogadores.
 				sendAll("draw");
 			} else {
-
 				// O jogo teve um vencedor. Avisar os jogadores.
 				sendAll("win " + vencedor.getNome());
 
 				try {
 					gerenciadorPontuacao.gravarPontuacao(vencedor.getNome());
-				} catch (PontuacaoException e) {
-					sendAll("error " + e.getMessage());
+				} catch (PontuacaoException error) {
+					sendAll("error " + error.getMessage());
 				}
 			}
-
 		}
 
 		private void obterPontuacao() {
@@ -175,4 +188,5 @@ public class TCPServer {
 			}
 		}
 	}
+
 }
