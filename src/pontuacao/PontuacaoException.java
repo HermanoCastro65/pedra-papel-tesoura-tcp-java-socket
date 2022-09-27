@@ -1,8 +1,8 @@
 package pontuacao;
 
-import jogo.JogoDaVelhaException;
+import jogo.JogoException;
 
-public class PontuacaoException extends JogoDaVelhaException {
+public class PontuacaoException extends JogoException {
 
 	public PontuacaoException(String message) {
 		super(message);
