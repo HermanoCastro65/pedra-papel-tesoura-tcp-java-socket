@@ -1,15 +1,12 @@
 package jogo;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 
 // Classe que representa o jogador dentro do jogo da velha.
-@SuppressWarnings("resource")
 public class Jogador {
 
-	// Nome de jogador.
 	private String nome;
 
 	// Canais de untrada e saida de dados.
@@ -42,12 +39,17 @@ public class Jogador {
 	public Jogada obterJogada() throws JogadaInvalidaException, IOException {
 
 		// sinaliza ao Cliente o momento de efetuar a jogada.
+		out.println("Escolha entre pedra papel tesoura");
 		out.println("play");
 
-		// recebe a jgada a partir do client-side.
-		String str = in.readLine();
+		// recebe a jogada a partir do client-side.
+		String str = in.readLine().toString();
+		if (str.equals("pedra") || str.equals("papel") || str.equals("tesoura")) {
+			System.out.print("entrou no IF:");
+			return new Jogada(str);
+		}
 
-		return new Jogada(str);
+		return obterJogada();
 	}
 
 	/**
