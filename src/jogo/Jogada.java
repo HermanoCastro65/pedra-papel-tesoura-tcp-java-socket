@@ -1,23 +1,19 @@
 package jogo;
 
-// Classe que representa a jogada de um jogador.
+// Classe que representa a jogada de um jogador
 public class Jogada {
 
 	private String jogada;
 
-	public Jogada(String jogada) throws JogadaInvalidaException {
+	public Jogada(String jogada) {
 		this.jogada = jogada;
 	}
 
-	/**
-	 * @param jogada
-	 * @throws JogadaInvalidaException
-	 */
-	public String getJogada() throws JogadaInvalidaException {
+	public String getJogada() {
 		try {
 			return this.jogada;
-		} catch (Exception e) {
-			throw new JogadaInvalidaException("Jogada inválida!");
+		} catch (Error error) {
+			throw error;
 		}
 	}
 }

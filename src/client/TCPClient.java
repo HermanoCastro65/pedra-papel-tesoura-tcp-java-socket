@@ -1,7 +1,6 @@
 package client;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
@@ -17,7 +16,7 @@ public class TCPClient {
 		this.port = port;
 	}
 
-	public void start() throws IOException {
+	public void start() throws Exception {
 		System.out.println("Conectando em " + host + ":" + port + "...");
 		try (var socket = new Socket(host, port)) {
 			var in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -68,6 +67,8 @@ public class TCPClient {
 					continue;
 				}
 			}
+		} catch (Error error) {
+			throw error;
 		}
 	}
 }

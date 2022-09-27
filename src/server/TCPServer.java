@@ -1,7 +1,6 @@
 package server;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.ServerSocket;
@@ -9,12 +8,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import jogo.Jogada;
-import jogo.JogadaInvalidaException;
 import jogo.Jogador;
-import pontuacao.ArquivoGerenciadorPontuacao;
-import pontuacao.GerenciadorPontuacao;
-import pontuacao.PontuacaoException;
 
 public class TCPServer {
 	private int port;
@@ -60,15 +54,14 @@ public class TCPServer {
 	 * Classe responsavel pela lógica de jogo
 	 */
 	private class Jogo {
-		private GerenciadorPontuacao gerenciadorPontuacao;
+
 		private Jogador vencedor;
 
-		public Jogo() throws PontuacaoException {
-			this.gerenciadorPontuacao = new ArquivoGerenciadorPontuacao();
+		public Jogo() {
 			this.vencedor = null;
 		}
 
-		public void start() throws IOException {
+		public void start() throws Exception {
 			aguardarJogadores();
 			iniciarRodada();
 		}
@@ -80,7 +73,7 @@ public class TCPServer {
 		 * @param serverSocket
 		 * @throws IOException
 		 */
-		private void aguardarJogadores() throws IOException {
+		private void aguardarJogadores() throws Exception {
 			int numJogadores = 0;
 
 			// rotina para aceitar e estabelecer o numero de jogadores
@@ -102,8 +95,7 @@ public class TCPServer {
 			}
 		}
 
-		private void iniciarRodada() {
-			obterPontuacao();
+		private void iniciarRodada() throws Exception {
 
 			sendAll("start");
 			boolean finalizado = false;
@@ -147,9 +139,8 @@ public class TCPServer {
 
 						jogadores.forEach(jogador -> jogador.getOut().println(vencedor.getNome() + " venceu"));
 					}
-				} catch (IOException | JogadaInvalidaException error) {
-					jogador1.send("error " + error.getMessage());
-					continue;
+				} catch (Error error) {
+					throw error;
 				}
 			}
 
@@ -160,33 +151,7 @@ public class TCPServer {
 				// O jogo teve um vencedor. Avisar os jogadores.
 				sendAll("win " + vencedor.getNome());
 
-				try {
-					gerenciadorPontuacao.gravarPontuacao(vencedor.getNome());
-				} catch (PontuacaoException error) {
-					sendAll("error " + error.getMessage());
-				}
-			}
-		}
-
-		private void obterPontuacao() {
-			for (var jogador : TCPServer.this.jogadores) {
-				Integer pontuacao = gerenciadorPontuacao.getPontuacao(jogador.getNome());
-
-				if (pontuacao != null) {
-					String msg = "pontuacao: O jogador '%s' já possui %d %s!\n";
-
-					msg = String.format(msg, jogador.getNome(), pontuacao, pontuacao == 1 ? "vitória" : "vitórias");
-
-					sendAll(msg);
-
-				} else {
-					String msg = String.format("pontuacao: O jogador '%s' nao possui pontuação registrada",
-							jogador.getNome());
-
-					sendAll(msg);
-				}
 			}
 		}
 	}
-
 }

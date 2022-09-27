@@ -1,15 +1,14 @@
 package jogo;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.PrintStream;
 
-// Classe que representa o jogador dentro do jogo da velha.
+// Classe que representa o jogador dentro do jogo
 public class Jogador {
 
 	private String nome;
 
-	// Canais de untrada e saida de dados.
+	// Canais de entrada e saída de dados
 	private BufferedReader in;
 	private PrintStream out;
 
@@ -31,18 +30,14 @@ public class Jogador {
 		return out;
 	}
 
-	/**
-	 * Recebe a jogada a partir canal de comunicaçâo com cliente.
-	 * 
-	 * @throws IOException, JogadaInvalidaException
-	 */
-	public Jogada obterJogada() throws JogadaInvalidaException, IOException {
+	// Recebe a jogada a partir canal de comunicaçâo com cliente
+	public Jogada obterJogada() throws Exception {
 
-		// sinaliza ao Cliente o momento de efetuar a jogada.
+		// sinaliza ao Cliente o momento de efetuar a jogada
 		out.println("Escolha entre pedra papel tesoura");
 		out.println("play");
 
-		// recebe a jogada a partir do client-side.
+		// recebe a jogada a partir do client-side
 		String str = in.readLine();
 		if (str.equals("pedra") || str.equals("papel") || str.equals("tesoura")) {
 			return new Jogada(str);
@@ -50,21 +45,11 @@ public class Jogador {
 		return obterJogada();
 	}
 
-	/**
-	 * Envia mensagem ao cliente.
-	 * 
-	 * @param msg
-	 */
 	public void send(String msg) {
 		out.println(msg);
 	}
 
-	/**
-	 * Encerra a comunicação com o cliente.
-	 * 
-	 * @throws IOException
-	 */
-	public void closeConnection() throws IOException {
+	public void closeConnection() throws Exception {
 		in.close();
 		out.close();
 	}
