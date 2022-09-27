@@ -1,12 +1,7 @@
 package jogo;
 
-/**
- * Exception que representa uma jogada inválida efetuada pelo jogador.
- * 
- * @author felipe
- *
- */
-public class JogadaInvalidaException extends JogoDaVelhaException {
+// Exception que representa uma jogada inválida efetuada pelo jogador.
+public class JogadaInvalidaException extends JogoException {
 
 	/**
 	 * @param message
@@ -14,5 +9,4 @@ public class JogadaInvalidaException extends JogoDaVelhaException {
 	public JogadaInvalidaException(String message) {
 		super(message);
 	}
-
 }

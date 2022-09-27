@@ -1,11 +1,6 @@
 package jogo;
 
-/**
- * Classe que representa a jogada de um jogador.
- * 
- * @author felipe
- * @version 1.0
- */
+// Classe que representa a jogada de um jogador.
 @SuppressWarnings("resource")
 public class Jogada {
 
@@ -14,9 +9,6 @@ public class Jogada {
 	}
 
 	/**
-	 * Quebram a String recebida como parametro e abastecem os atributos x e y da
-	 * classe.
-	 * 
 	 * @param jogada
 	 * @throws JogadaInvalidaException
 	 */
@@ -27,5 +19,4 @@ public class Jogada {
 			throw new JogadaInvalidaException("Jogada inválida!");
 		}
 	}
-
 }

@@ -5,23 +5,14 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 
-/**
- * Classe que representa o jogador dentro do jogo da velha.
- * 
- * @author felipe
- *
- */
+// Classe que representa o jogador dentro do jogo da velha.
 @SuppressWarnings("resource")
 public class Jogador {
 
-	/**
-	 * Nome de jogador.
-	 */
+	// Nome de jogador.
 	private String nome;
 
-	/**
-	 * Canais de untrada e saida de dados.
-	 */
+	// Canais de untrada e saida de dados.
 	private BufferedReader in;
 	private PrintStream out;
 
@@ -77,5 +68,4 @@ public class Jogador {
 		in.close();
 		out.close();
 	}
-
 }
