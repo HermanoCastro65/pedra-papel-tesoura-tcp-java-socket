@@ -33,7 +33,7 @@ public class TCPClient {
 			in.readLine();
 
 			System.out.println("=================");
-			System.out.println("| JOGO DA VELHA |");
+			System.out.println("| PEDRA PAPEL TESOURA |");
 			System.out.println("=================");
 			System.out.println();
 
@@ -71,7 +71,6 @@ public class TCPClient {
 				} else if (msg.startsWith("pontuacao:")) {
 					System.out.println(msg.substring(12) + "\n");
 					continue;
-
 				}
 			}
 		}
