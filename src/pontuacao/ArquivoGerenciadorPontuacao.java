@@ -24,9 +24,8 @@ public class ArquivoGerenciadorPontuacao implements GerenciadorPontuacao {
 		if (!arquivo.exists()) {
 			try {
 				arquivo.createNewFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-
+			} catch (IOException error) {
+				error.printStackTrace();
 			}
 		}
 
@@ -42,18 +41,17 @@ public class ArquivoGerenciadorPontuacao implements GerenciadorPontuacao {
 				pontuacaoMap.put(tokens[0].toUpperCase(), Integer.valueOf(tokens[1]));
 
 			}
-		} catch (IOException e) {
-			throw new PontuacaoException(e.getMessage());
+		} catch (IOException error) {
+			throw new PontuacaoException(error.getMessage());
 		} finally {
 			if (reader != null) {
 				try {
 					reader.close();
-				} catch (IOException e) {
-					throw new PontuacaoException(e.getMessage());
+				} catch (IOException error) {
+					throw new PontuacaoException(error.getMessage());
 				}
 			}
 		}
-
 	}
 
 	@Override
@@ -74,13 +72,10 @@ public class ArquivoGerenciadorPontuacao implements GerenciadorPontuacao {
 		try (var writer = new BufferedWriter(new FileWriter(ARQUIVO))) {
 			for (Map.Entry<String, Integer> entry : pontuacaoMap.entrySet()) {
 				writer.write(entry.getKey() + "|" + entry.getValue());
-
 				writer.newLine();
 			}
-		} catch (IOException e) {
-			throw new PontuacaoException(e.getMessage());
+		} catch (IOException error) {
+			throw new PontuacaoException(error.getMessage());
 		}
-
 	}
-
 }
