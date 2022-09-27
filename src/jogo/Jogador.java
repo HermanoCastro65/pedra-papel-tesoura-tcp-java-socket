@@ -7,19 +7,28 @@ import java.io.PrintStream;
 public class Jogador {
 
 	private String nome;
-
+	private int pontos;
 	// Canais de entrada e saída de dados
 	private BufferedReader in;
 	private PrintStream out;
 
+	// Variável que define se jogador permanece no jogo
+	private boolean game;
+
 	public Jogador(String nome, BufferedReader in, PrintStream out) {
 		this.nome = nome;
+		this.pontos = 0;
 		this.in = in;
 		this.out = out;
+		this.game = true;
 	}
 
 	public String getNome() {
 		return nome;
+	}
+
+	public int getPontos() {
+		return pontos;
 	}
 
 	public BufferedReader getIn() {
@@ -28,6 +37,10 @@ public class Jogador {
 
 	public PrintStream getOut() {
 		return out;
+	}
+
+	public boolean getGame() {
+		return game;
 	}
 
 	// Recebe a jogada a partir canal de comunicaçâo com cliente
@@ -43,6 +56,18 @@ public class Jogador {
 			return new Jogada(str);
 		}
 		return obterJogada();
+	}
+
+	public void endGame() throws Exception {
+
+		// pergunta ao Cliente se deseja jogar novamente
+		out.println("end");
+
+		// recebe a resposta a partir do client-side
+		String resp = in.readLine();
+		if (resp.equals("nao")) {
+			this.game = false;
+		}
 	}
 
 	public void send(String msg) {
