@@ -20,5 +20,5 @@ code .
 
 3- Rode o servidor passando como argumento a porta desejada como indica a figura:
 
-![DATE PICKER](print-server.PNG)
+![print-server](print-server.PNG)
 
