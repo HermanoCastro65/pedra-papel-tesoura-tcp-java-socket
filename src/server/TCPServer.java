@@ -135,6 +135,16 @@ public class TCPServer {
 					throw error;
 				}
 			}
+
+			jogadores.forEach(jogador -> {
+				jogador.getOut().println("Fim de jogo");
+				placar(jogador1, jogador2);
+				try {
+					jogador.closeConnection();
+				} catch (Exception error) {
+					System.out.println(error.getMessage());
+				}
+			});
 		}
 
 		private void placar(Jogador jogador1, Jogador jogador2) {
