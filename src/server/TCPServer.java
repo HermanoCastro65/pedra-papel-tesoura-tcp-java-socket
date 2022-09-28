@@ -91,8 +91,10 @@ public class TCPServer {
 					String jogada2 = jogador2.obterJogada().getJogada();
 
 					jogadores.forEach(jogador -> {
+						jogador.getOut().println();
 						jogador.getOut().println(jogador1.getNome() + ": " + jogada1);
 						jogador.getOut().println(jogador2.getNome() + ": " + jogada2);
+						jogador.getOut().println();
 					});
 
 					if (jogada1.equals(jogada2)) {
@@ -121,7 +123,7 @@ public class TCPServer {
 
 						jogadores.forEach(jogador -> {
 							jogador.getOut().println(vencedor.getNome() + " venceu");
-
+							jogador.getOut().println();
 							try {
 								jogador.endGame();
 							} catch (Exception error) {
@@ -139,16 +141,15 @@ public class TCPServer {
 			jogadores.forEach(jogador -> {
 				jogador.getOut().println("Fim de jogo");
 				placar(jogador1, jogador2);
-				try {
-					jogador.closeConnection();
-				} catch (Exception error) {
-					System.out.println(error.getMessage());
-				}
 			});
+
+			sendAll("close");
+			return;
 		}
 
 		private void placar(Jogador jogador1, Jogador jogador2) {
 			jogadores.forEach(jogador -> {
+				jogador.getOut().println();
 				jogador.getOut().println("PLACAR ");
 				jogador.getOut().println(
 						jogador1.getNome() + " " + jogador1.getPontos() + " X " + jogador2.getPontos() + " " + jogador2.getNome());

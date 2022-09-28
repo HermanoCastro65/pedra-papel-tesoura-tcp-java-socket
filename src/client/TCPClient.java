@@ -53,12 +53,15 @@ public class TCPClient {
 				}
 
 				if (msg.equals("end")) {
-					System.out.println("Deseja jogar outra rodada (sim ou não)");
+					System.out.println("Deseja jogar outra rodada (sim ou nao)");
 					String end = Console.readString();
 					System.out.println();
 
 					out.println(end);
 				}
+
+				if (msg.equals("close"))
+					return;
 			}
 		} catch (Error error) {
 			throw error;
