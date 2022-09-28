@@ -20,5 +20,5 @@ code .
 
 3- Rode o servidor passando como argumento a porta desejada como indica a figura:
 
-![print-server](print-server.PNG)
+![print-server](print-server.png)
 
