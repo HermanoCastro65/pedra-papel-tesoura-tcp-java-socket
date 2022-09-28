@@ -57,6 +57,7 @@ public class TCPClient {
 					String end = Console.readString();
 					System.out.println();
 
+					// Envia mensagem ao servidor
 					out.println(end);
 				}
 

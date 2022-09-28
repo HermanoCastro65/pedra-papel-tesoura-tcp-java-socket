@@ -47,11 +47,11 @@ public class Jogador {
 	// Recebe a jogada a partir canal de comunicaçâo com cliente
 	public Jogada obterJogada() throws Exception {
 
-		// sinaliza ao Cliente o momento de efetuar a jogada
+		// Sinaliza ao Cliente o momento de efetuar a jogada
 		out.println("Escolha entre pedra papel tesoura");
 		out.println("play");
 
-		// recebe a jogada a partir do client-side
+		// Recebe a jogada a partir do client-side
 		String str = in.readLine();
 		if (str.equals("pedra") || str.equals("papel") || str.equals("tesoura")) {
 			return new Jogada(str);
@@ -61,10 +61,10 @@ public class Jogador {
 
 	public void endGame() throws Exception {
 
-		// pergunta ao Cliente se deseja jogar novamente
+		// Pergunta ao Cliente se deseja jogar novamente
 		out.println("end");
 
-		// recebe a resposta a partir do client-side
+		// Recebe a resposta a partir do client-side
 		String resp = in.readLine();
 		if (resp.equals("nao")) {
 			this.game = false;

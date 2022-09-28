@@ -58,7 +58,7 @@ public class TCPServer {
 		private void aguardarJogadores() throws Exception {
 			int numJogadores = 0;
 
-			// rotina para aceitar e estabelecer o numero de jogadores
+			// Rotina para aceitar e estabelecer o numero de jogadores
 			while (numJogadores < 2) {
 				Socket clientSocket = TCPServer.this.serverSocket.accept();
 
@@ -66,7 +66,7 @@ public class TCPServer {
 				var in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 				var out = new PrintStream(clientSocket.getOutputStream());
 
-				// Recebe o nome do jogador a partirdo fluxo de entrada
+				// Recebe o nome do jogador a partir do fluxo de entrada
 				String nome = in.readLine();
 
 				System.out.println("Jogador '" + nome + "' conectado!");
@@ -97,6 +97,7 @@ public class TCPServer {
 						jogador.getOut().println();
 					});
 
+					// Lógica do pedra papel e tesoura
 					if (jogada1.equals(jogada2)) {
 						jogadores.forEach(jogador -> jogador.getOut().println("Empate"));
 						System.out.println("Empate");
