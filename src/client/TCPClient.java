@@ -16,6 +16,7 @@ public class TCPClient {
 		this.port = port;
 	}
 
+	// Classe que comunica o client-side com o servidor
 	public void start() throws Exception {
 		System.out.println("Conectando em " + host + ":" + port + "...");
 
@@ -43,7 +44,6 @@ public class TCPClient {
 				System.out.println(msg);
 
 				if (msg.equals("play")) {
-					// Chegou sua vez de jogar
 					System.out.print("Efetue sua jogada: ");
 					String jogada = Console.readString();
 					System.out.println();
